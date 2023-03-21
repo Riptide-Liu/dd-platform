@@ -62,10 +62,7 @@ public class ClassesController {
 
     @GetMapping("/list") // 查询所有班级
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
-    public APIResult getList(){
-        List<Classes> list = classesService.list();
-        if(Objects.isNull(list))
-            return ResultGenerator.genFailed("查询班级列表失败");
-        return ResultGenerator.genSuccess("查询班级列表成功", list);
+    public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,@NotNull @RequestParam(value = "page_size")Integer pageSize){
+        return classesService.getClassList(pageNum, pageSize);
     }
 }

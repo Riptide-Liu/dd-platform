@@ -1,17 +1,21 @@
 package com.riptide.ddplatform.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.riptide.ddplatform.domin.APIResult;
 import com.riptide.ddplatform.domin.pojo.Role;
 import com.riptide.ddplatform.domin.pojo.User;
 import com.riptide.ddplatform.domin.pojo.UserRole;
+import com.riptide.ddplatform.domin.vo.PageVo;
+import com.riptide.ddplatform.domin.vo.UserVo;
 import com.riptide.ddplatform.enums.ApiEnum;
 import com.riptide.ddplatform.exception.GlobalException;
 import com.riptide.ddplatform.mapper.RoleMapper;
 import com.riptide.ddplatform.mapper.UserMapper;
 import com.riptide.ddplatform.mapper.UserRoleMapper;
 import com.riptide.ddplatform.service.UserService;
+import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -97,10 +101,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public APIResult selectAll() {
-        List<User> user = userMapper.selectList(null);
-        if(Objects.isNull(user))
-            return ResultGenerator.genFailed("查询用户列表失败");
-        return ResultGenerator.genSuccess("查询用户列表成功", user);
+    public APIResult getUserList(Integer pageNum, Integer pageSize) {
+        //查询条件
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        // 状态是未删除的
+        lambdaQueryWrapper.eq(User::getDelFlag, 0);
+        // 对创建时间进行降序
+        lambdaQueryWrapper.orderByDesc(User::getCreateTime);
+
+        //分页查询
+        Page<User> page = new Page<>(pageNum,pageSize);
+        page(page,lambdaQueryWrapper);
+
+        //封装查询结果
+        List<UserVo> userVos = BeanCopyUtils.copyBeanList(page.getRecords(), UserVo.class);
+
+        PageVo pageVo = new PageVo(userVos,page.getTotal(), page.getSize(), page.getCurrent());
+        return ResultGenerator.genSuccess("获取用户列表成功",pageVo);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -100,6 +101,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     public APIResult MethodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException e) {
+
+        // 返回错误信息
+        return ResultGenerator.genFailed("参数类型错误", e.getMessage());
+    }
+    @ExceptionHandler(value = MissingServletRequestParameterException.class)
+    public APIResult MissingServletRequestParameterExceptionHandler(MissingServletRequestParameterException e) {
 
         // 返回错误信息
         return ResultGenerator.genFailed("参数类型错误", e.getMessage());

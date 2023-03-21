@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,18 +49,16 @@ public class UserController {
         return userService.delete(user.getId());
     }
 
-    @PostMapping("/admin/user/item") // 查询用户
+    @GetMapping("/admin/user/item") // 查询用户
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
-    public APIResult getUserItem(@Validated(value = ValidatorGroups.SelectItem.class) @RequestBody UserDto user){
-        return userService.selectItem(user.getId());
+    public APIResult getUserItem(@NotNull @RequestParam(value = "id") Long id){
+        return userService.selectItem(id);
     }
 
-    @GetMapping("/admin/user/all") // 查询所有用户
+    @GetMapping("/admin/user/list") // 查询所有用户
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
-    public APIResult getUserList(){
-        List<User> list = userService.list();
-        if(Objects.isNull(list))
-            return ResultGenerator.genFailed("查询用户列表失败");
-        return ResultGenerator.genSuccess("查询用户列表成功", list);
+    public APIResult getUserList(@NotNull @RequestParam(value = "page_num")Integer pageNum,@NotNull @RequestParam(value = "pageSize")Integer pageSize){
+
+        return userService.getUserList(pageNum, pageSize);
     }
 }

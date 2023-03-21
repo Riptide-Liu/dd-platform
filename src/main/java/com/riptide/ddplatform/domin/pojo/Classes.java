@@ -21,7 +21,7 @@ public class Classes implements Serializable {
     @TableId
     private Long id;
     /**
-     * 用户名
+     * 班级名
      */
     private String name;
     /**
