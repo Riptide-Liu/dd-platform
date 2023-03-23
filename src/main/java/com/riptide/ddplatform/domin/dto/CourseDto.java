@@ -1,4 +1,4 @@
-package com.riptide.ddplatform.domin.pojo;
+package com.riptide.ddplatform.domin.dto;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -8,55 +8,37 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotBlank;
+import org.w3c.dom.Text;
 
-
+import javax.validation.constraints.NotNull;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.Date;
 
-
-/**
- * 用户表(User)实体类
- *
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "sys_user")
-public class User implements Serializable {
+public class CourseDto implements Serializable {
 
     /**
      * 主键
      */
-    @TableId
+    @NotNull(message = "Id不能为空", groups = {ValidatorGroups.Update.class})
     private Long id;
     /**
-     * 用户名
+     * 课程名
      */
-    private String userName;
+    @NotBlank(message = "课程名不能为空", groups = {ValidatorGroups.Update.class, ValidatorGroups.Add.class})
+    private String name;
     /**
-     * 昵称
+     * 封面图片
      */
-    private String nickName;
+    private String image_uuid;
     /**
-     * 密码
+     * 描述
      */
-    private String password;
-    /**
-     * 账号状态（0正常 1停用）
-     */
-    private String status;
-    /**
-     * 用户性别（0男，1女，2未知）
-     */
-    private String sex;
-    /**
-     * 头像
-     */
-    private String avatar;
-    /**
-     * 用户类型（0管理员，1普通用户）
-     */
-    private String userType;
+    private String description;
     /**
      * 创建时间
      */
@@ -69,8 +51,5 @@ public class User implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime updateTime;
-    /**
-     * 删除标志（0代表未删除，1代表已删除）
-     */
-    private Integer delFlag;
+
 }

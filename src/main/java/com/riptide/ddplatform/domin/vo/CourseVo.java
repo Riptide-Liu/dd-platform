@@ -1,54 +1,46 @@
-package com.riptide.ddplatform.domin.pojo;
+package com.riptide.ddplatform.domin.vo;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.riptide.ddplatform.domin.dto.ValidatorGroups;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotBlank;
 
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
+import java.awt.*;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "sys_role")
-public class Role implements Serializable {
-
+@AllArgsConstructor
+public class CourseVo {
     /**
      * 主键
      */
-    @TableId
     private Long id;
     /**
-     * 角色名
+     * 课程名
      */
     private String name;
     /**
-     * 角色权限字符串
+     * 封面图片
      */
-    private String roleKey;
+    private String image_uuid;
     /**
-     * 角色状态（0正常 1停用）
+     * 描述
      */
-    private String status;
+    private String description;
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime createTime;
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime updateTime;
-    /**
-     * 删除标志（0代表未删除，1代表已删除）
-     */
-    private Integer delFlag;
 }

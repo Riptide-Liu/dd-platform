@@ -21,8 +21,7 @@ public class UserDto implements Serializable {
     /**
      * 主键
      */
-    @TableId
-    @NotNull(message = "Id不能为空", groups = {ValidatorGroups.SelectItem.class, ValidatorGroups.Delete.class, ValidatorGroups.Update.class})
+    @NotNull(message = "Id不能为空", groups = {ValidatorGroups.Update.class})
     private Long id;
     /**
      * 用户名
@@ -58,17 +57,9 @@ public class UserDto implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private LocalDateTime createTime;
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date updateTime;
-    /**
-     * 删除标志（0代表未删除，1代表已删除）
-     */
-
+    private LocalDateTime updateTime;
 }

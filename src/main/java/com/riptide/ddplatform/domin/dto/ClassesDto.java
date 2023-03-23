@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ClassesDto implements Serializable {
 
-    @NotNull(message = "Id不能为空", groups = {ValidatorGroups.SelectItem.class, ValidatorGroups.Delete.class, ValidatorGroups.Update.class})
+    @NotNull(message = "Id不能为空", groups = {ValidatorGroups.Update.class})
     private Long id;
 
     @NotBlank(message = "班级名不能为空", groups = {ValidatorGroups.Add.class, ValidatorGroups.Update.class})

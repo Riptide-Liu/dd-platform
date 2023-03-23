@@ -1,4 +1,4 @@
-package com.riptide.ddplatform.controller;
+package com.riptide.ddplatform.controller.admin;
 
 import com.riptide.ddplatform.domin.APIResult;
 import com.riptide.ddplatform.domin.pojo.User;
@@ -19,12 +19,13 @@ import java.util.Objects;
 
 @RestController
 @Api("用户模块")
+@RequestMapping("/admin/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/admin/user/add") // 增加用户
+    @PostMapping("/add") // 增加用户
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult addUser(@Validated(value = ValidatorGroups.Add.class) @RequestBody UserDto userDto){
         User user = new User();
@@ -32,7 +33,7 @@ public class UserController {
         return userService.add(user);
     }
 
-    @PostMapping("/admin/user/edit") // 编辑用户
+    @PostMapping("/edit") // 编辑用户
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult editUser(@Validated(value = ValidatorGroups.Update.class) @RequestBody UserDto userDto){
         User user = new User();
@@ -40,7 +41,7 @@ public class UserController {
         return userService.edit(user);
     }
 
-    @PostMapping("/admin/user/delete") // 删除用户
+    @PostMapping("/delete") // 删除用户
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult deleteUser(@Validated(value = ValidatorGroups.Delete.class) @RequestBody UserDto userDto){
         User user = new User();
@@ -49,13 +50,13 @@ public class UserController {
         return userService.delete(user.getId());
     }
 
-    @GetMapping("/admin/user/item") // 查询用户
+    @GetMapping("/item") // 查询用户
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult getUserItem(@NotNull @RequestParam(value = "id") Long id){
         return userService.selectItem(id);
     }
 
-    @GetMapping("/admin/user/list") // 查询所有用户
+    @GetMapping("/list") // 查询所有用户
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult getUserList(@NotNull @RequestParam(value = "page_num")Integer pageNum,@NotNull @RequestParam(value = "pageSize")Integer pageSize){
 

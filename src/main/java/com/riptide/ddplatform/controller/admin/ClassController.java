@@ -1,18 +1,14 @@
-package com.riptide.ddplatform.controller;
+package com.riptide.ddplatform.controller.admin;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.riptide.ddplatform.domin.APIResult;
 import com.riptide.ddplatform.domin.dto.ClassesDto;
 import com.riptide.ddplatform.domin.pojo.Classes;
-import com.riptide.ddplatform.domin.pojo.User;
-import com.riptide.ddplatform.domin.dto.UserDto;
 import com.riptide.ddplatform.domin.dto.ValidatorGroups;
 import com.riptide.ddplatform.service.ClassesService;
 import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import io.swagger.annotations.Api;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -21,12 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RestController
 @Api("班级模块")
-@RequestMapping("/admin/classes")
-public class ClassesController {
+@RequestMapping("/admin/class")
+public class ClassController {
 
     @Autowired
     private ClassesService classesService;
