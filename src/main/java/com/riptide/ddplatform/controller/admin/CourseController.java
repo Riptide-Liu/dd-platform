@@ -3,10 +3,12 @@ package com.riptide.ddplatform.controller.admin;
 
 import com.riptide.ddplatform.domin.APIResult;
 import com.riptide.ddplatform.domin.dto.ClassesDto;
+import com.riptide.ddplatform.domin.dto.CourseChapterDto;
 import com.riptide.ddplatform.domin.dto.CourseDto;
 import com.riptide.ddplatform.domin.dto.ValidatorGroups;
 import com.riptide.ddplatform.domin.pojo.Classes;
 import com.riptide.ddplatform.domin.pojo.Course;
+import com.riptide.ddplatform.domin.pojo.CourseChapter;
 import com.riptide.ddplatform.service.ClassesService;
 import com.riptide.ddplatform.service.CourseService;
 import com.riptide.ddplatform.util.BeanCopyUtils;

@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
