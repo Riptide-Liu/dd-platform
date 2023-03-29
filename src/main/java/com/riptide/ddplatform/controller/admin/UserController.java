@@ -7,6 +7,7 @@ import com.riptide.ddplatform.domin.dto.ValidatorGroups;
 import com.riptide.ddplatform.service.UserService;
 import com.riptide.ddplatform.util.ResultGenerator;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,8 +19,8 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@Api("用户模块")
 @RequestMapping("/admin/user")
+@Api(tags = "用户模块",description = "用户相关接口")
 public class UserController {
 
     @Autowired
@@ -27,6 +28,7 @@ public class UserController {
 
     @PostMapping("/add") // 增加用户
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
+    @ApiOperation(value = "添加用户",notes = "添加一个用户")
     public APIResult addUser(@Validated(value = ValidatorGroups.Add.class) @RequestBody UserDto userDto){
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
