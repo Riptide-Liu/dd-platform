@@ -35,7 +35,7 @@ public class CourseDto implements Serializable {
     /**
      * 封面图片
      */
-    private String image_uuid;
+    private String image_key;
     /**
      * 描述
      */

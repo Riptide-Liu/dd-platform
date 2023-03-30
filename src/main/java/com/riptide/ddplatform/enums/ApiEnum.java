@@ -3,6 +3,16 @@ package com.riptide.ddplatform.enums;
 
 public enum ApiEnum {
     SUCCESS(200, "成功"),
+    ADD_SUCCESS(200, "添加成功"),
+    EDIT_SUCCESS(200, "编辑成功"),
+    DELETE_SUCCESS(200, "删除成功"),
+    GET_SUCCESS(200, "获取成功"),
+    SELECT_SUCCESS(200, "查询成功"),
+    ADD_FAILED(500, "添加失败"),
+    EDIT_FAILED(500, "编辑失败"),
+    DELETE_FAILED(500, "删除失败"),
+    GET_FAILED(500, "获取失败"),
+    SELECT_FAILED(500, "查询失败"),
     FAILED(500, "失败"),
     LOGIN_SUCCESS(200, "登录成功"),
     ACCESS_DENIED(403, "权限不足"),

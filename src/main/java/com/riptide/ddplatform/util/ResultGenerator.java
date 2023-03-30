@@ -42,6 +42,12 @@ public class ResultGenerator {
         return new APIResult(apiEnum);
     }
 
+    public static APIResult genSuccess(ApiEnum apiEnum, Object o) {
+        APIResult<Object> res = new APIResult(apiEnum);
+        res.setData(o);
+        return res;
+    }
+
     public static APIResult genFailed() {
         return new APIResult(ApiEnum.FAILED);
     }

@@ -37,6 +37,7 @@ public class UserController {
 
     @PostMapping("/edit") // 编辑用户
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
+    @ApiOperation(value = "编辑用户",notes = "编辑一个用户")
     public APIResult editUser(@Validated(value = ValidatorGroups.Update.class) @RequestBody UserDto userDto){
         User user = new User();
         BeanUtils.copyProperties(userDto, user);

@@ -24,8 +24,8 @@ public class ChapterUnit implements Serializable {
     private String title;
     private Long chapterId;
     private String content;
-    @TableField(value = "file_uuid")
-    private String fileUUID;
+    @TableField(value = "file_key")
+    private String fileKey;
     /**
      * 创建时间
      */
