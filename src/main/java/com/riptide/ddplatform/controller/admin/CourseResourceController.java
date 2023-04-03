@@ -54,13 +54,17 @@ public class CourseResourceController {
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult getItem(@NotNull @RequestParam(value = "id") Long id){
         CourseResource result = courseResourceService.getById(id);
+        
         return !Objects.isNull(result)? ResultGenerator.genSuccess(ApiEnum.GET_SUCCESS,result):ResultGenerator.genFailed(ApiEnum.GET_FAILED);
 
     }
 
     @GetMapping("/list")
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
-    public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,@NotNull @RequestParam(value = "page_size")Integer pageSize){
-        return courseResourceService.getList(pageNum, pageSize);
+    public APIResult getList(@NotNull @RequestParam(value = "page_num") Integer pageNum,
+                             @NotNull @RequestParam(value = "page_size") Integer pageSize,
+                             @RequestParam(value = "query_value")String queryValue,
+                             @RequestParam(value = "course_id")Long courseId) {
+        return courseResourceService.getList(pageNum, pageSize,courseId,queryValue);
     }
 }

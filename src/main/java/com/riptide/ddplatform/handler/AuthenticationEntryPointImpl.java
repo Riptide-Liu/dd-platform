@@ -1,6 +1,7 @@
 package com.riptide.ddplatform.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.riptide.ddplatform.enums.ApiEnum;
 import com.riptide.ddplatform.util.ResultGenerator;
 import com.riptide.ddplatform.util.WebUtils;
 import org.springframework.security.core.AuthenticationException;
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        String json = JSON.toJSONString(ResultGenerator.genFailed("认证失败请重新登录!"));
+        String json = JSON.toJSONString(ResultGenerator.genFailed(ApiEnum.TOKEN_TIMEOUT));
         WebUtils.renderString(response,json);
     }
 }

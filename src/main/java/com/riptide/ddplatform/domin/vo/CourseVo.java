@@ -29,7 +29,7 @@ public class CourseVo {
     /**
      * 封面图片
      */
-    private String image_key;
+    private String imageKey;
     /**
      * 描述
      */

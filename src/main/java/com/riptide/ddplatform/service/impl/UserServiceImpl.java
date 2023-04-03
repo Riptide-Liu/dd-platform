@@ -1,6 +1,7 @@
 package com.riptide.ddplatform.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.riptide.ddplatform.domin.APIResult;
@@ -39,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public APIResult add(User user) {
         // 检查是否已存在用户
         LambdaQueryWrapper<User> userWrapper = new LambdaQueryWrapper<>();
-        userWrapper.eq(User::getUserName, user.getUserName());
+        userWrapper.eq(User::getUsername, user.getUsername());
         User selectUser = userMapper.selectOne(userWrapper);
         if (!Objects.isNull(selectUser)) {
             throw new GlobalException(ApiEnum.USERNAME_REGISTED);
@@ -77,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public APIResult edit(User user) {
         // 检查是否跟其它用户名重名
         User selectUser = userMapper.selectById(user.getId());
-        user.setUserName(selectUser.getUserName());
+        user.setUsername(selectUser.getUsername());
         if (userMapper.updateById(user) == 1) {
             LambdaQueryWrapper<Role> roleWrapper = new LambdaQueryWrapper<>();
             roleWrapper.eq(Role::getRoleKey, user.getUserType());
@@ -101,18 +102,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public APIResult getUserList(Integer pageNum, Integer pageSize) {
+    public APIResult getUserList(Integer pageNum, Integer pageSize, String queryValue) {
         //查询条件
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 状态是未删除的
         lambdaQueryWrapper.eq(User::getDelFlag, 0);
         // 对创建时间进行降序
         lambdaQueryWrapper.orderByDesc(User::getCreateTime);
-
+        // 模糊查询
+        lambdaQueryWrapper.like(StringUtils.isNotEmpty(queryValue) , User::getUsername,  queryValue);
         //分页查询
         Page<User> page = new Page<>(pageNum,pageSize);
         page(page,lambdaQueryWrapper);
-
         //封装查询结果
         List<UserVo> userVos = BeanCopyUtils.copyBeanList(page.getRecords(), UserVo.class);
 

@@ -61,7 +61,9 @@ public class CourseController {
 
     @GetMapping("/list") // 查询所有班级
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
-    public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,@NotNull @RequestParam(value = "page_size")Integer pageSize){
-        return courseService.getCourseList(pageNum, pageSize);
+    public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,
+                             @NotNull @RequestParam(value = "page_size")Integer pageSize,
+                             @RequestParam(value = "query_value")String queryValue){
+        return courseService.getCourseList(pageNum, pageSize, queryValue);
     }
 }

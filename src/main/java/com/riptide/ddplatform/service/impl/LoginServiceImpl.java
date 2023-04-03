@@ -30,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public APIResult login(User user) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         if(Objects.isNull(authenticate)){
             throw new GlobalException(ApiEnum.USERNAME_PASSWORD_ERROR);

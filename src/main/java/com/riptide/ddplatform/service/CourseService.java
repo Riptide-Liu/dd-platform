@@ -6,5 +6,5 @@ import com.riptide.ddplatform.domin.pojo.Course;
 import org.apache.ibatis.annotations.Param;
 
 public interface CourseService extends IService<Course> {
-    APIResult getCourseList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    APIResult getCourseList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("queryValue") String queryValue);
 }

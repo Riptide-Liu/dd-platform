@@ -3,10 +3,12 @@ package com.riptide.ddplatform.service.impl;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
+import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import com.riptide.ddplatform.domin.APIResult;
 import com.riptide.ddplatform.enums.ApiEnum;
@@ -15,6 +17,7 @@ import com.riptide.ddplatform.service.FileService;
 import com.riptide.ddplatform.util.PathUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,8 +53,6 @@ public class FileServiceImpl implements FileService {
                 Response response = uploadManager.put(inputStream,key,upToken,null, null);
                 //解析上传成功的结果
                 DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-                System.out.println(putRet.key);
-                System.out.println(putRet.hash);
 //                return "http://rsaaqbr24.bkt.clouddn.com/"+key;
 
                 return key;
@@ -79,7 +80,6 @@ public class FileServiceImpl implements FileService {
     public String getFileUrl(String fileName) throws UnsupportedEncodingException {
         String encodedFileName = URLEncoder.encode(fileName, "utf-8").replace("+", "%20");
         String finalUrl = String.format("%s/%s", "http://" + domain, encodedFileName);
-        System.out.println(finalUrl);
         return finalUrl;
     }
 
@@ -88,13 +88,11 @@ public class FileServiceImpl implements FileService {
         //判断文件类型
         //获取原始文件名
         String originalFilename = file.getOriginalFilename();
-
         //如果判断通过上传文件到OSS
         String filePath = PathUtils.generateFilePath(originalFilename);
-        String url = uploadOss(file,filePath);
+        String url = uploadOss(file,originalFilename);
         return ResultGenerator.genSuccess(ApiEnum.FILE_UPLOAD_SUCCESS, url);
     }
-
     @Override
     public APIResult download(String file_name) {
         try {

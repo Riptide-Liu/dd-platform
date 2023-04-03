@@ -1,9 +1,6 @@
 package com.riptide.ddplatform.domin.pojo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,12 +25,13 @@ public class User implements Serializable {
     /**
      * 主键
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 用户名
      */
-    private String userName;
+    @TableField(value = "user_name")
+    private String username;
     /**
      * 昵称
      */
@@ -45,19 +43,19 @@ public class User implements Serializable {
     /**
      * 账号状态（0正常 1停用）
      */
-    private String status;
+    private int status;
     /**
      * 用户性别（0男，1女，2未知）
      */
-    private String sex;
+    private int sex;
     /**
      * 头像
      */
     private String avatar;
     /**
-     * 用户类型（0管理员，1普通用户）
+     * 用户类型（0管理员，1教师，2普通用户）
      */
-    private String userType;
+    private int userType;
     /**
      * 创建时间
      */

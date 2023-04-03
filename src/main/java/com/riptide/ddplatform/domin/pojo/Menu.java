@@ -1,9 +1,6 @@
 package com.riptide.ddplatform.domin.pojo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -25,7 +22,7 @@ import java.util.Date;
 public class Menu implements Serializable {
     private static final long serialVersionUID = -54979041104113736L;
     
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
     * 菜单名

@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public interface CourseChapterService extends IService<CourseChapter> {
-    APIResult getList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    APIResult getList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("courseId") Long courseId, @Param("queryValue") String queryValue);
 }

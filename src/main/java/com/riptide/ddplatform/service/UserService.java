@@ -10,5 +10,5 @@ public interface UserService extends IService<User> {
     APIResult delete(@Param("id") Long id);
     APIResult edit(User user);
     APIResult selectItem(@Param("id") Long id);
-    APIResult getUserList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    APIResult getUserList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("queryValue") String queryValue);
 }

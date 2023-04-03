@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.riptide.ddplatform.domin.APIResult;
-import com.riptide.ddplatform.domin.pojo.ChapterUnit;
-import com.riptide.ddplatform.domin.pojo.Course;
-import com.riptide.ddplatform.domin.pojo.CourseChapter;
-import com.riptide.ddplatform.domin.pojo.User;
+import com.riptide.ddplatform.domin.pojo.*;
 import com.riptide.ddplatform.domin.vo.CourseChapterVo;
 import com.riptide.ddplatform.domin.vo.CourseVo;
 import com.riptide.ddplatform.domin.vo.PageVo;
@@ -29,9 +26,12 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
     @Autowired
     private ChapterUnitMapper chapterUnitMapper;
     @Override
-    public APIResult getList(Integer pageNum, Integer pageSize) {
+    public APIResult getList(Integer pageNum, Integer pageSize, Long courseId, String queryValue) {
         //查询条件
         LambdaQueryWrapper<CourseChapter> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+
+        // 根据courseId查询
+        lambdaQueryWrapper.eq(courseId != null , CourseChapter::getCourseId,  courseId);
         // 对创建时间进行降序
         lambdaQueryWrapper.orderByDesc(CourseChapter::getCreateTime);
 

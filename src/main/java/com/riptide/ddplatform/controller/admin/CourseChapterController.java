@@ -61,7 +61,10 @@ public class CourseChapterController {
 
     @GetMapping("/list")
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
-    public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,@NotNull @RequestParam(value = "page_size")Integer pageSize){
-        return courseChapterService.getList(pageNum, pageSize);
+    public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,
+                             @NotNull @RequestParam(value = "page_size")Integer pageSize,
+                             @RequestParam(value = "query_value")String queryValue,
+                             @RequestParam(value = "course_id")Long courseId){
+        return courseChapterService.getList(pageNum, pageSize,courseId,queryValue);
     }
 }

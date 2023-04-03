@@ -35,18 +35,10 @@ public class CourseDto implements Serializable {
     /**
      * 封面图片
      */
-    private String image_key;
+    private String imageKey;
     /**
      * 描述
      */
     private String description;
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-    /**
-     * 更新时间
-     */
-    private LocalDateTime updateTime;
 
 }

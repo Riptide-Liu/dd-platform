@@ -1,9 +1,11 @@
 package com.riptide.ddplatform.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.riptide.ddplatform.domin.APIResult;
+import com.riptide.ddplatform.domin.pojo.Course;
 import com.riptide.ddplatform.domin.pojo.CourseResource;
 import com.riptide.ddplatform.domin.vo.CourseResourceVo;
 import com.riptide.ddplatform.domin.vo.PageVo;
@@ -13,6 +15,7 @@ import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.NumberUtils;
 
 import java.util.List;
 
@@ -20,15 +23,21 @@ import java.util.List;
 public class CourseResourceImpl extends ServiceImpl<CourseResourceMapper, CourseResource> implements CourseResourceService {
 
     @Override
-    public APIResult getList(Integer pageNum, Integer pageSize) {
+    public APIResult getList(Integer pageNum, Integer pageSize, Long courseId, String queryValue) {
         //查询条件
         LambdaQueryWrapper<CourseResource> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+
+        // 根据courseId查询
+        lambdaQueryWrapper.eq(courseId != null , CourseResource::getCourseId,  courseId);
         // 对创建时间进行降序
         lambdaQueryWrapper.orderByDesc(CourseResource::getCreateTime);
-
+        // 模糊查询
+        lambdaQueryWrapper.like(StringUtils.isNotEmpty(queryValue) , CourseResource::getName,  queryValue);
         //分页查询
         Page<CourseResource> page = new Page<>(pageNum,pageSize);
         page(page,lambdaQueryWrapper);
+
+        System.out.println("page.getRecords()"+page.getRecords());
 
         //封装查询结果
         List<CourseResourceVo> courseResourceVoList = BeanCopyUtils.copyBeanList(page.getRecords(), CourseResourceVo.class);

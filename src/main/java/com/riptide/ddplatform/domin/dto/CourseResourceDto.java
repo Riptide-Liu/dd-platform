@@ -23,9 +23,9 @@ public class CourseResourceDto implements Serializable {
     @NotBlank(message = "课程资源名不能为空", groups = {ValidatorGroups.Update.class, ValidatorGroups.Add.class})
     private String name;
     @NotBlank(message = "文件不能为空", groups = {ValidatorGroups.Update.class, ValidatorGroups.Add.class})
-    private String file_key;
+    private String fileKey;
 
-    @NotBlank(message = "课程id不能为空", groups = {ValidatorGroups.Update.class, ValidatorGroups.Add.class})
-    private Long course_id;
+    @NotNull(message = "课程id不能为空", groups = {ValidatorGroups.Update.class, ValidatorGroups.Add.class})
+    private Long courseId;
 
 }

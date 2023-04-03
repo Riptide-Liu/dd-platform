@@ -20,5 +20,5 @@ public class ChapterUnitDto implements Serializable {
     @NotBlank(message = "章节Id不能为空", groups = {ValidatorGroups.Update.class, ValidatorGroups.Add.class})
     private Long chapterId;
     private String content;
-    private String file_key;
+    private String fileKey;
 }
