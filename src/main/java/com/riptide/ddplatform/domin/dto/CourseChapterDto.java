@@ -20,6 +20,6 @@ public class CourseChapterDto implements Serializable {
     private Long id;
     @NotBlank(message = "章节名不能为空", groups = {ValidatorGroups.Update.class, ValidatorGroups.Add.class})
     private String name;
-    @NotBlank(message = "课程Id不能为空", groups = {ValidatorGroups.Update.class, ValidatorGroups.Add.class})
+    @NotNull(message = "课程Id不能为空", groups = {ValidatorGroups.Update.class, ValidatorGroups.Add.class})
     private Long courseId;
 }

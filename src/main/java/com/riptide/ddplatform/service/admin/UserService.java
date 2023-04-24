@@ -1,4 +1,4 @@
-package com.riptide.ddplatform.service;
+package com.riptide.ddplatform.service.admin;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.riptide.ddplatform.domin.APIResult;

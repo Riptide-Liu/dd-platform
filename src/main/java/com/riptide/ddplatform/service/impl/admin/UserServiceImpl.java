@@ -1,4 +1,4 @@
-package com.riptide.ddplatform.service.impl;
+package com.riptide.ddplatform.service.impl.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -15,7 +15,7 @@ import com.riptide.ddplatform.exception.GlobalException;
 import com.riptide.ddplatform.mapper.RoleMapper;
 import com.riptide.ddplatform.mapper.UserMapper;
 import com.riptide.ddplatform.mapper.UserRoleMapper;
-import com.riptide.ddplatform.service.UserService;
+import com.riptide.ddplatform.service.admin.UserService;
 import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +79,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 检查是否跟其它用户名重名
         User selectUser = userMapper.selectById(user.getId());
         user.setUsername(selectUser.getUsername());
+        // 密码加密后再存入数据库
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (userMapper.updateById(user) == 1) {
             LambdaQueryWrapper<Role> roleWrapper = new LambdaQueryWrapper<>();
             roleWrapper.eq(Role::getRoleKey, user.getUserType());

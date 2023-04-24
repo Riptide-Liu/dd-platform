@@ -6,7 +6,7 @@ import com.riptide.ddplatform.domin.pojo.User;
 import com.riptide.ddplatform.domin.dto.UserDto;
 import com.riptide.ddplatform.domin.dto.ValidatorGroups;
 import com.riptide.ddplatform.enums.ApiEnum;
-import com.riptide.ddplatform.service.UserService;
+import com.riptide.ddplatform.service.admin.UserService;
 import com.riptide.ddplatform.util.ResultGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,13 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/admin/user")
@@ -32,7 +30,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/add") // 增加用户
-    @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
+    @PreAuthorize("hasAnyAuthority('admin')")
     @ApiOperation(value = "添加用户",notes = "添加一个用户")
     public APIResult addUser(@Validated(value = ValidatorGroups.Add.class) @RequestBody UserDto userDto){
         User user = new User();
@@ -41,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/edit") // 编辑用户
-    @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
+    @PreAuthorize("hasAnyAuthority('admin')")
     @ApiOperation(value = "编辑用户",notes = "编辑一个用户")
     public APIResult editUser(@Validated(value = ValidatorGroups.Update.class) @RequestBody UserDto userDto){
         User user = new User();

@@ -3,12 +3,9 @@ package com.riptide.ddplatform.controller.admin;
 
 import com.riptide.ddplatform.domin.APIResult;
 import com.riptide.ddplatform.domin.dto.ChapterUnitDto;
-import com.riptide.ddplatform.domin.dto.CourseChapterDto;
 import com.riptide.ddplatform.domin.dto.ValidatorGroups;
 import com.riptide.ddplatform.domin.pojo.ChapterUnit;
-import com.riptide.ddplatform.domin.pojo.CourseChapter;
-import com.riptide.ddplatform.service.ChapterUnitService;
-import com.riptide.ddplatform.service.CourseChapterService;
+import com.riptide.ddplatform.service.admin.ChapterUnitService;
 import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import io.swagger.annotations.Api;
@@ -50,7 +47,6 @@ public class ChapterUnitController {
     }
 
     @GetMapping("/item")
-    @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult getItem(@NotNull @RequestParam(value = "id") Long id){
         ChapterUnit result = chapterUnitService.getById(id);
         return !Objects.isNull(result)? ResultGenerator.genSuccess("获取成功",result):ResultGenerator.genFailed("获取失败！");

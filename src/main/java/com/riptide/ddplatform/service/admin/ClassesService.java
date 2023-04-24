@@ -1,4 +1,4 @@
-package com.riptide.ddplatform.service;
+package com.riptide.ddplatform.service.admin;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.riptide.ddplatform.domin.APIResult;
@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Param;
 
 
 public interface ClassesService extends IService<Classes> {
-    APIResult getClassList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    APIResult getClassList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("queryValue") String queryValue);
 }

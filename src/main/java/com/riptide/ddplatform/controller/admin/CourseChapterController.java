@@ -3,12 +3,9 @@ package com.riptide.ddplatform.controller.admin;
 
 import com.riptide.ddplatform.domin.APIResult;
 import com.riptide.ddplatform.domin.dto.CourseChapterDto;
-import com.riptide.ddplatform.domin.dto.CourseDto;
 import com.riptide.ddplatform.domin.dto.ValidatorGroups;
-import com.riptide.ddplatform.domin.pojo.Course;
 import com.riptide.ddplatform.domin.pojo.CourseChapter;
-import com.riptide.ddplatform.service.CourseChapterService;
-import com.riptide.ddplatform.service.CourseService;
+import com.riptide.ddplatform.service.admin.CourseChapterService;
 import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import io.swagger.annotations.Api;
@@ -60,11 +57,7 @@ public class CourseChapterController {
     }
 
     @GetMapping("/list")
-    @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
-    public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,
-                             @NotNull @RequestParam(value = "page_size")Integer pageSize,
-                             @RequestParam(value = "query_value")String queryValue,
-                             @RequestParam(value = "course_id")Long courseId){
-        return courseChapterService.getList(pageNum, pageSize,courseId,queryValue);
+    public APIResult getList(@RequestParam(value = "course_id")Long courseId){
+        return courseChapterService.getList(courseId);
     }
 }

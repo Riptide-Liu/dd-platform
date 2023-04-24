@@ -5,7 +5,7 @@ import com.riptide.ddplatform.domin.APIResult;
 import com.riptide.ddplatform.domin.dto.ClassesDto;
 import com.riptide.ddplatform.domin.pojo.Classes;
 import com.riptide.ddplatform.domin.dto.ValidatorGroups;
-import com.riptide.ddplatform.service.ClassesService;
+import com.riptide.ddplatform.service.admin.ClassesService;
 import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import io.swagger.annotations.Api;
@@ -55,9 +55,16 @@ public class ClassController {
 
     }
 
+    @GetMapping("/list/all") // 查询所有班级
+    @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
+    public APIResult getList(){
+        List<Classes> list = classesService.list();
+        return ResultGenerator.genSuccess("获取班级成功",list);
+    }
+
     @GetMapping("/list") // 查询所有班级
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
-    public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,@NotNull @RequestParam(value = "page_size")Integer pageSize){
-        return classesService.getClassList(pageNum, pageSize);
+    public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,@NotNull @RequestParam(value = "page_size")Integer pageSize,  @RequestParam(value = "query_value")String queryValue){
+        return classesService.getClassList(pageNum, pageSize, queryValue);
     }
 }

@@ -2,15 +2,10 @@ package com.riptide.ddplatform.controller.admin;
 
 
 import com.riptide.ddplatform.domin.APIResult;
-import com.riptide.ddplatform.domin.dto.ClassesDto;
-import com.riptide.ddplatform.domin.dto.CourseChapterDto;
 import com.riptide.ddplatform.domin.dto.CourseDto;
 import com.riptide.ddplatform.domin.dto.ValidatorGroups;
-import com.riptide.ddplatform.domin.pojo.Classes;
 import com.riptide.ddplatform.domin.pojo.Course;
-import com.riptide.ddplatform.domin.pojo.CourseChapter;
-import com.riptide.ddplatform.service.ClassesService;
-import com.riptide.ddplatform.service.CourseService;
+import com.riptide.ddplatform.service.admin.CourseService;
 import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import io.swagger.annotations.Api;
@@ -59,7 +54,14 @@ public class CourseController {
 
     }
 
-    @GetMapping("/list") // 查询所有班级
+    @GetMapping("/list/all") // 查询所有课程
+    @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
+    public APIResult getList(){
+        List<Course> list = courseService.list();
+        return ResultGenerator.genSuccess("获取课程成功",list);
+    }
+
+    @GetMapping("/list") // 查询所有课程
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult getList(@NotNull @RequestParam(value = "page_num")Integer pageNum,
                              @NotNull @RequestParam(value = "page_size")Integer pageSize,

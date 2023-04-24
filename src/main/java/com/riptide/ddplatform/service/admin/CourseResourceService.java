@@ -1,11 +1,12 @@
-package com.riptide.ddplatform.service;
+package com.riptide.ddplatform.service.admin;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.riptide.ddplatform.domin.APIResult;
-import com.riptide.ddplatform.domin.pojo.CourseChapter;
+import com.riptide.ddplatform.domin.pojo.CourseResource;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestBody;
 
-public interface CourseChapterService extends IService<CourseChapter> {
+public interface CourseResourceService extends IService<CourseResource> {
     APIResult getList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("courseId") Long courseId, @Param("queryValue") String queryValue);
+    APIResult getALL(@Param("courseId") Long courseId);
+
 }

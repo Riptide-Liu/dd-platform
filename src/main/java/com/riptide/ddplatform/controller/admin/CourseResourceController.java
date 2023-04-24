@@ -1,13 +1,11 @@
 package com.riptide.ddplatform.controller.admin;
 
 import com.riptide.ddplatform.domin.APIResult;
-import com.riptide.ddplatform.domin.dto.CourseChapterDto;
 import com.riptide.ddplatform.domin.dto.CourseResourceDto;
 import com.riptide.ddplatform.domin.dto.ValidatorGroups;
-import com.riptide.ddplatform.domin.pojo.CourseChapter;
 import com.riptide.ddplatform.domin.pojo.CourseResource;
 import com.riptide.ddplatform.enums.ApiEnum;
-import com.riptide.ddplatform.service.CourseResourceService;
+import com.riptide.ddplatform.service.admin.CourseResourceService;
 import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import io.swagger.annotations.Api;

@@ -1,4 +1,4 @@
-package com.riptide.ddplatform.service.impl;
+package com.riptide.ddplatform.service.impl.admin;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -7,11 +7,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.riptide.ddplatform.domin.APIResult;
 import com.riptide.ddplatform.domin.pojo.Course;
-import com.riptide.ddplatform.domin.pojo.User;
 import com.riptide.ddplatform.domin.vo.CourseVo;
 import com.riptide.ddplatform.domin.vo.PageVo;
 import com.riptide.ddplatform.mapper.CourseMapper;
-import com.riptide.ddplatform.service.CourseService;
+import com.riptide.ddplatform.service.admin.CourseService;
 import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import org.springframework.stereotype.Service;

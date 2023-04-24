@@ -31,9 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
 
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -54,8 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 异常处理器
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-//        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).
-//                accessDeniedHandler(accessDeniedHandler);
 
         // 允许跨域
         http.cors();

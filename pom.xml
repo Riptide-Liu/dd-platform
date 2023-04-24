@@ -49,6 +49,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!--screw依赖-->
+        <dependency>
+            <groupId>cn.smallbun.screw</groupId>
+            <artifactId>screw-core</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+
         <!--        redis依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
