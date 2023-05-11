@@ -25,7 +25,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         //查询条件
         LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 对创建时间进行降序
-        lambdaQueryWrapper.orderByDesc(Course::getCreateTime);
+//        lambdaQueryWrapper.orderByDesc(Course::getCreateTime);
         // 模糊查询
         lambdaQueryWrapper.like(StringUtils.isNotEmpty(queryValue) , Course::getName,  queryValue);
         //分页查询

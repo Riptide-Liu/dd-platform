@@ -2,6 +2,7 @@ package com.riptide.ddplatform.domin.pojo;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,6 @@ import java.util.Date;
 public class ClassCourse implements Serializable {
     private Long classId;
     private Long courseId;
-
     @TableField(value = "start_time")
     private Date startTime;
     @TableField(value = "end_time")

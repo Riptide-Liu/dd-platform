@@ -3,10 +3,7 @@ package com.riptide.ddplatform.service.impl;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
-import com.qiniu.storage.BucketManager;
-import com.qiniu.storage.Configuration;
-import com.qiniu.storage.Region;
-import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.*;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
@@ -17,6 +14,7 @@ import com.riptide.ddplatform.service.FileService;
 import com.riptide.ddplatform.util.PathUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
 import lombok.Data;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
@@ -77,10 +75,13 @@ public class FileServiceImpl implements FileService {
      * @param fileName 文件名称
      * @return 下载文件的链接
      */
+    @SneakyThrows
     public String getFileUrl(String fileName) throws UnsupportedEncodingException {
         String encodedFileName = URLEncoder.encode(fileName, "utf-8").replace("+", "%20");
-        String finalUrl = String.format("%s/%s", "http://" + domain, encodedFileName);
-        return finalUrl;
+//        String finalUrl = String.format("%s/%s", "http://" + domain, encodedFileName);
+        DownloadUrl url = new DownloadUrl(domain, false, fileName);
+        url.setAttname(fileName); // 配置 attname
+        return  url.buildURL();
     }
 
     @Override

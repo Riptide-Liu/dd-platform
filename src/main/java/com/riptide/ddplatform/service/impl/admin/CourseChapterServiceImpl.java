@@ -36,7 +36,7 @@ public class CourseChapterServiceImpl extends ServiceImpl<CourseChapterMapper, C
         // 根据courseId查询
         lambdaQueryWrapper.eq(courseId != null , CourseChapter::getCourseId,  courseId);
         // 对创建时间进行降序
-        lambdaQueryWrapper.orderByDesc(CourseChapter::getCreateTime);
+        lambdaQueryWrapper.orderByAsc(CourseChapter::getCreateTime);
 
         //分页查询
       /*  Page<CourseChapter> page = new Page<>(pageNum,pageSize);

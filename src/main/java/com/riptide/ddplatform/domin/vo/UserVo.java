@@ -3,6 +3,7 @@ package com.riptide.ddplatform.domin.vo;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.riptide.ddplatform.domin.pojo.Classes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,10 @@ public class UserVo {
      * 用户类型（0管理员，1教师，2普通用户）
      */
     private int userType;
+    /**
+     * 班级信息
+     */
+    private Classes classInfo;
     /**
      * 创建时间
      */

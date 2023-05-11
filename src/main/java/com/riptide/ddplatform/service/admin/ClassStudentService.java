@@ -10,4 +10,5 @@ import org.apache.ibatis.annotations.Param;
 public interface ClassStudentService extends IService<ClassStudent> {
     APIResult getList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("classId") Long classId, @Param("queryValue") String queryValue);
     APIResult getAll();
+    APIResult add(@Param("ClassStudent") ClassStudent classStudent);
 }

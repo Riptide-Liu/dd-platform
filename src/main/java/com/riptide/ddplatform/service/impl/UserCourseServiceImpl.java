@@ -24,9 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 @Service
@@ -58,7 +56,7 @@ public class UserCourseServiceImpl extends ServiceImpl<ClassCourseMapper, ClassC
         // 根据classId查询
         lambdaQueryWrapper.eq(ClassCourse::getClassId,  classStudent.getClassId());
         // 对创建时间进行降序
-        lambdaQueryWrapper.orderByDesc(ClassCourse::getCreateTime);
+//        lambdaQueryWrapper.orderByDesc(ClassCourse::getCreateTime);
 
         //分页查询
         Page<ClassCourse> page = new Page<>(pageNum,pageSize);
@@ -71,13 +69,20 @@ public class UserCourseServiceImpl extends ServiceImpl<ClassCourseMapper, ClassC
         if(!records.isEmpty()) {
             for(ClassCourse classCourse: records){
                 ClassCourseVo vo = BeanCopyUtils.copyBean(classCourse, ClassCourseVo.class);
-                vo.setClasses(classes);
+                if(vo.getEndTime().before(new Date()))
+                    continue;
+
                 vo.setCourse(courseMapper.selectById(classCourse.getCourseId()));
                 vos.add(vo);
             }
         }
-
-        PageVo pageVo = new PageVo(vos,page.getTotal(), page.getSize(), page.getCurrent());
-        return ResultGenerator.genSuccess("获取课程列表成功",pageVo);
+//        PageVo pageVo = new PageVo(vos,page.getTotal(), page.getSize(), page.getCurrent());
+        Map<String, Object> map = new HashMap<>();
+        map.put("items", vos);
+        map.put("class_info", classes);
+        map.put("total", page.getTotal());
+        map.put("pageSize", page.getSize());
+        map.put("pageNum", page.getCurrent());
+        return ResultGenerator.genSuccess("获取课程列表成功",map);
     }
 }

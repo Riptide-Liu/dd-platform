@@ -32,7 +32,8 @@ public class ClassStudentController {
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult add(@Validated(value = ValidatorGroups.Add.class) @RequestBody ClassStudentDto classStudentDto){
         ClassStudent classStudent = BeanCopyUtils.copyBean(classStudentDto, ClassStudent.class);
-        return classStudentService.save(classStudent)? ResultGenerator.genSuccess("增加班级学生成功"):ResultGenerator.genFailed("增加班级学生失败！");
+        return classStudentService.add(classStudent);
+//                ? ResultGenerator.genSuccess("增加班级学生成功"):ResultGenerator.genFailed("增加班级学生失败！")
     }
 
     @PostMapping("/edit") // 编辑班级学生
@@ -50,7 +51,6 @@ public class ClassStudentController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("class_id", classStudentDto.getClassId());
                 map.put("user_id", classStudentDto.getUserId());
-                System.out.println(map);
                 classStudentService.removeByMap(map);
             }
             return ResultGenerator.genSuccess("删除班级学生成功");

@@ -32,7 +32,11 @@ public class ClassCourseController {
     @PreAuthorize("hasAnyAuthority('admin', 'teacher')")
     public APIResult add(@Validated(value = ValidatorGroups.Add.class) @RequestBody ClassCourseDto classCourseDto){
         ClassCourse classCourse = BeanCopyUtils.copyBean(classCourseDto, ClassCourse.class);
-        return classCourseService.save(classCourse)? ResultGenerator.genSuccess("增加班级课程计划成功"):ResultGenerator.genFailed("增加班级课程计划失败！");
+        try {
+            return classCourseService.save(classCourse)? ResultGenerator.genSuccess("增加班级课程计划成功"):ResultGenerator.genFailed("增加班级课程计划失败！");
+        } catch (Exception e) {
+            return ResultGenerator.genFailed("增加班级课程计划失败！");
+        }
     }
 
     @PostMapping("/edit") // 编辑班级课程计划

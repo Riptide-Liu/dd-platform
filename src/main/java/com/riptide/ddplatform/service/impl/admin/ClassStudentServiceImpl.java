@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -93,5 +94,20 @@ public class ClassStudentServiceImpl extends ServiceImpl<ClassStudentMapper, Cla
         List<User> users = userMapper.selectBatchIds(userIds);
 
         return ResultGenerator.genSuccess("获取同班同学成功",users);
+    }
+
+    @Override
+    public APIResult add(ClassStudent classStudent) {
+        //查询条件
+        LambdaQueryWrapper<ClassStudent> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ClassStudent::getUserId, classStudent.getUserId());
+        ClassStudent cs = classStudentMapper.selectOne(lambdaQueryWrapper);
+        if (!Objects.isNull(cs)) {
+            int update = classStudentMapper.update(classStudent, lambdaQueryWrapper);
+           return update !=0 ?ResultGenerator.genSuccess("更新班级学生成功") : ResultGenerator.genFailed("更新班级学生失败！");
+        }else {
+            int insert = classStudentMapper.insert(classStudent);
+            return insert !=0?ResultGenerator.genSuccess("增加班级学生成功") : ResultGenerator.genFailed("增加班级学生失败！");
+        }
     }
 }

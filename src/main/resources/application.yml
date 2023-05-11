@@ -9,9 +9,8 @@ spring:
       maxRequestSize: 10MB
   datasource:
     url: jdbc:mysql://localhost:3306/ddplatform?characterEncoding=utf-8&serverTimezone=GMT%2B8
-    username: root
+    username: riptideliu
     password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
     redis:
       host: localhost
       port: 6379
@@ -20,6 +19,6 @@ mybatis-plus:
 oss:
   accessKey: P63Uq30HFdyypBodfr6GatBBKvO16o0nxiGLasQU
   secretKey: w0ip73RotUDhWg03ZYXQImBuLudlvpbh-Ccuyyi7
-  bucket: riptide-platform
+  bucket: riptide-platform2
   zone: huadong
-  domain: rsaaqbr24.bkt.clouddn.com
+  domain: rtt4fgqt3.bkt.clouddn.com

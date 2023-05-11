@@ -36,10 +36,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(Objects.isNull(user)){
             throw new GlobalException(ApiEnum.PRODUCT_NOT_EXIST);
         }
-        //TODO 根据用户查询权限信息 添加到LoginUser中
+        // 根据用户查询权限信息 添加到LoginUser中
         //List<String> list = new ArrayList<>(Arrays.asList("test", "admin"));
 
-        List<String> permissionKeyList =  menuMapper.selectPermsByUserId(user.getId());
+        List<String> permissionKeyList = menuMapper.selectPermsByUserId(user.getId());
         //封装成UserDetails对象返回 
         return new LoginUser(user, permissionKeyList);
     }

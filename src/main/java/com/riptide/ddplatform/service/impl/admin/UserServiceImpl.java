@@ -5,16 +5,12 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.riptide.ddplatform.domin.APIResult;
-import com.riptide.ddplatform.domin.pojo.Role;
-import com.riptide.ddplatform.domin.pojo.User;
-import com.riptide.ddplatform.domin.pojo.UserRole;
+import com.riptide.ddplatform.domin.pojo.*;
 import com.riptide.ddplatform.domin.vo.PageVo;
 import com.riptide.ddplatform.domin.vo.UserVo;
 import com.riptide.ddplatform.enums.ApiEnum;
 import com.riptide.ddplatform.exception.GlobalException;
-import com.riptide.ddplatform.mapper.RoleMapper;
-import com.riptide.ddplatform.mapper.UserMapper;
-import com.riptide.ddplatform.mapper.UserRoleMapper;
+import com.riptide.ddplatform.mapper.*;
 import com.riptide.ddplatform.service.admin.UserService;
 import com.riptide.ddplatform.util.BeanCopyUtils;
 import com.riptide.ddplatform.util.ResultGenerator;
@@ -34,7 +30,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserRoleMapper userRoleMapper;
     @Autowired
     private RoleMapper roleMapper;
-
+    @Autowired
+    private ClassStudentMapper classStudentMapper;
+    @Autowired
+    private ClassesMapper classesMapper;
 
     @Override
     public APIResult add(User user) {
@@ -80,15 +79,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User selectUser = userMapper.selectById(user.getId());
         user.setUsername(selectUser.getUsername());
         // 密码加密后再存入数据库
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(user.getPassword() != null) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         if (userMapper.updateById(user) == 1) {
-            LambdaQueryWrapper<Role> roleWrapper = new LambdaQueryWrapper<>();
-            roleWrapper.eq(Role::getRoleKey, user.getUserType());
-            Role new_role = roleMapper.selectOne(roleWrapper);
+            LambdaQueryWrapper<Role> newRoleWrapper = new LambdaQueryWrapper<>();
+            newRoleWrapper.eq(Role::getRoleKey, user.getUserType());
+            Role new_role = roleMapper.selectOne(newRoleWrapper);
 
-            roleWrapper.eq(Role::getRoleKey, selectUser.getUserType());
-            Role old_role = roleMapper.selectOne(roleWrapper);
+            LambdaQueryWrapper<Role> oldRoleWrapper = new LambdaQueryWrapper<>();
+            oldRoleWrapper.eq(Role::getRoleKey, selectUser.getUserType());
+            Role old_role = roleMapper.selectOne(oldRoleWrapper);
 
             userRoleMapper.updateUserRole(user.getId(), new_role.getId(), old_role.getId());
             return ResultGenerator.genSuccess("编辑用户成功！");
@@ -119,6 +121,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         page(page,lambdaQueryWrapper);
         //封装查询结果
         List<UserVo> userVos = BeanCopyUtils.copyBeanList(page.getRecords(), UserVo.class);
+        for (UserVo uservo : userVos) {
+            LambdaQueryWrapper<ClassStudent> csw = new LambdaQueryWrapper<>();
+            csw.eq(ClassStudent::getUserId, uservo.getId());
+            ClassStudent classStudent = classStudentMapper.selectOne(csw);
+            if(!Objects.isNull(classStudent)) {
+                LambdaQueryWrapper<Classes> cw = new LambdaQueryWrapper<>();
+                cw.eq(Classes::getId, classStudent.getClassId());
+                uservo.setClassInfo(classesMapper.selectOne(cw));
+            }
+        }
 
         PageVo pageVo = new PageVo(userVos,page.getTotal(), page.getSize(), page.getCurrent());
         return ResultGenerator.genSuccess("获取用户列表成功",pageVo);
